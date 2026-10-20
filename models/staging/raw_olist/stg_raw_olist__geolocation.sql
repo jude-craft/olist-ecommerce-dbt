@@ -7,14 +7,12 @@ source as (
 ),
 
 renamed as (
-
     select
-        geolocation_zip_code_prefix,
-        geolocation_lat,
-        geolocation_lng,
-        geolocation_city,
-        geolocation_state
-
+        geolocation_zip_code_prefix as zip_code_prefix,
+        geolocation_lat as lat,
+        geolocation_lng as lng,
+        geolocation_city as city,
+        geolocation_state as state
     from source
 
 )

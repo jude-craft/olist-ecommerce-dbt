@@ -6,20 +6,18 @@ source as (
 
 ),
 
-renamed as (
 
+renamed as (
     select
         order_id,
         customer_id,
         order_status,
-        order_purchase_timestamp,
-        order_approved_at,
-        order_delivered_carrier_date,
-        order_delivered_customer_date,
-        order_estimated_delivery_date
-
+        safe_cast(order_purchase_timestamp as timestamp) as purchased_at,
+        safe_cast(order_approved_at as timestamp) as approved_at,
+        safe_cast(order_delivered_carrier_date as timestamp) as delivered_to_carrier_at,
+        safe_cast(order_delivered_customer_date as timestamp) as delivered_at,
+        safe_cast(order_estimated_delivery_date as timestamp) as estimated_delivery_at
     from source
-
 )
 
 select * from renamed

@@ -15,7 +15,7 @@ models:
   - name: stg_raw_olist__geolocation
     description: "Brazilian zip codes and coordinates."
     columns:
-      - name: geolocation_zip_code_prefix
+      - name: zip_code_prefix
         data_tests:
           - not_null
 
@@ -26,8 +26,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_raw_olist__orders')
+                field: order_id
       - name: order_item_id
         data_tests:
           - not_null
@@ -35,14 +36,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__products')
-              field: product_id
+              arguments:
+                to: ref('stg_raw_olist__products')
+                field: product_id
       - name: seller_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__sellers')
-              field: seller_id
+              arguments:
+                to: ref('stg_raw_olist__sellers')
+                field: seller_id
 
   - name: stg_raw_olist__order_payments
     description: "Payment methods and transaction values per order."
@@ -51,12 +54,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_raw_olist__orders')
+                field: order_id
       - name: payment_type
         data_tests:
           - accepted_values:
-              values: ['credit_card', 'boleto', 'voucher', 'debit_card', 'not_defined']
+              arguments:
+                values: ['credit_card', 'boleto', 'voucher', 'debit_card', 'not_defined']
 
   - name: stg_raw_olist__order_reviews
     description: "Customer review scores and commentary."
@@ -68,13 +73,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_raw_olist__orders')
+                field: order_id
       - name: review_score
         data_tests:
           - accepted_values:
-              values: [1, 2, 3, 4, 5]
-              quote: false
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
 
   - name: stg_raw_olist__orders
     description: "Core order header table."
@@ -87,12 +94,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_raw_olist__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_raw_olist__customers')
+                field: customer_id
       - name: order_status
         data_tests:
           - accepted_values:
-              values: ['delivered', 'shipped', 'canceled', 'unavailable', 'invoiced', 'processing', 'created', 'approved']
+              arguments:
+                values: ['delivered', 'shipped', 'canceled', 'unavailable', 'invoiced', 'processing', 'created', 'approved']
 
   - name: stg_raw_olist__products
     description: "Product dimension table."
@@ -113,7 +122,7 @@ models:
   - name: stg_raw_olist__product_category_name_translation
     description: "Portuguese to English category translation lookup."
     columns:
-      - name: product_category_name
+      - name: category_name
         data_tests:
           - unique
           - not_null
